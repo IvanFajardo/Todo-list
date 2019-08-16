@@ -1,5 +1,5 @@
 <div style="position: absolute; top: 0; right: 0">
-        <ngb-alert *ngIf = "!statusClose" (close)="close()">
+        <ngb-alert *ngIf = "temp != Message" (close)="close()">
                <strong>{{ Type }}: </strong> {{ Message }}
               </ngb-alert>
             </div>

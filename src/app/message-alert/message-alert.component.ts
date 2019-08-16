@@ -9,7 +9,7 @@ export class MessageAlertComponent implements OnInit {
 
   @Input() Message: string;
   @Input() Type: string;
-
+  temp: any;
   statusClose: boolean;
 
   constructor() { }
@@ -19,6 +19,7 @@ export class MessageAlertComponent implements OnInit {
 
   close() {
     this.statusClose = true;
+    this.temp = this.Message;
   }
 
 }

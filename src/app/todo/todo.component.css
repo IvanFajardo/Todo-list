@@ -13,3 +13,9 @@ table {
     justify-content: center !important;
 }
 
+.livedate {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+

@@ -10,17 +10,18 @@ import { Observable } from 'rxjs';
   styleUrls: ['./todo.component.css']
 })
 export class TodoComponent implements OnInit {
-  //data: JSONData;
   private newTodo;
   private updateTodo;
   private EditId: number;
   page = 1;
   pageSize = 5;
+  liveDate: Date = new Date();
+  dateLive: string;
   date = formatDate(Date(), 'MMM dd h:MM a', 'en-US');
   filter: any = 'All';
   filterStatus: boolean = null;
-  messageType: string;
-  message: string;
+  messageType = new Observable();
+  message = new Observable();
   messageStatus: boolean;
   data: Observable <JSONData>;
 
@@ -28,6 +29,11 @@ export class TodoComponent implements OnInit {
 
   ngOnInit() {
     this.get();
+    setInterval(() => {
+      this.liveDate = new Date();
+      this.dateLive = formatDate(this.liveDate, 'MMM dd yyy h:MM:ss a', 'en-US');
+    }, 1);
+
   }
 
   get() {
@@ -55,7 +61,7 @@ export class TodoComponent implements OnInit {
   }
 
   updateStatus(id: number, status: boolean, title: string, date) {
-      this.sendMessage('Update', title + ' is ' + (status) ? 'DONE' : 'ACTIVE');
+      this.sendMessage('Update', title + ' is ' + ((status) ? 'DONE' : 'ACTIVE'));
       this.todoService.update({
       title: title,
       status: !status,
@@ -81,7 +87,7 @@ export class TodoComponent implements OnInit {
     console.log(this.filterStatus);
   }
 
-  sendMessage(type: string, message: any) {
+  sendMessage(type: any, message: any) {
     this.messageType = type;
     this.message = message;
     this.messageStatus = true;

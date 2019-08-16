@@ -1,16 +1,28 @@
 {
   "todo": [
     {
-      "title": "sdfsdf",
-      "status": true,
-      "date": "Aug 15 5:08 PM",
+      "title": "SETUP",
+      "status": false,
+      "date": "Aug 16 10:08 AM",
       "id": 1
     },
     {
-      "title": "Yaayyy",
-      "status": true,
-      "date": "Aug 16 8:08 AM",
+      "title": "TYPESCRIPT, ANGULAR CLI and REST API",
+      "status": false,
+      "date": "Aug 16 10:08 AM",
       "id": 2
+    },
+    {
+      "title": "ANGULAR 6 FUNDAMENTALS",
+      "status": false,
+      "date": "Aug 16 10:08 AM",
+      "id": 3
+    },
+    {
+      "title": "ANGULAR 6 ADVANCE FEATURES",
+      "status": true,
+      "date": "Aug 16 10:08 AM",
+      "id": 4
     }
   ]
 }

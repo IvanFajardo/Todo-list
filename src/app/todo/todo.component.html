@@ -1,7 +1,7 @@
 
 <div class="justify-content-center">
 
-    <div *ngIf="data" style="text-align: center;" class="col-sm-6" >
+    <div *ngIf="data | async" style="text-align: center;" class="col-sm-6" >
        
         <h1>Todo List</h1>
     <input 
@@ -74,5 +74,8 @@
 
 <div *ngIf="messageStatus === true">
     <app-message-alert [Type]="messageType" [Message]="message"></app-message-alert>
+</div>
+<div class="livedate">
+{{ dateLive }}
 </div>
 

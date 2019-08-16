@@ -21,19 +21,6 @@ export class TodoService {
     return this.http.get<JSONData>('http://localhost:5000/todo/');
   }
 
-  // try(data) {
-  //   let options = {
-  //     method: 'POST' ,
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //       body: JSON.stringify(data)
-  //   };
-
-  //   console.log(options);
-  //   this.http.post('http://localhost:5000/todo/', JSON.stringify(data)).subscribe();
-
-  // }
 
   config(methodStr, id = '', data) {
     let options = {
