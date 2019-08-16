@@ -1,0 +1,78 @@
+
+<div class="justify-content-center">
+
+    <div *ngIf="data" style="text-align: center;" class="col-sm-6" >
+       
+        <h1>Todo List</h1>
+    <input 
+            class="form-control" 
+            type="text" 
+            [(ngModel)] = "newTodo" 
+            (keyup.enter)="add()" 
+            placeholder="Add new Task">
+                
+    <table class="table table-stripped" style="text-align: center;">  
+        <tr>
+            <th scope="col">
+                <select class="btn btn-secondary dropdown-toggle" [(ngModel)]="filter" (change)="selected()" required>
+                        <option selected>All</option>
+                        <option >Active</option>
+                        <option >Done</option>
+                </select>
+            </th>
+            <th scope="col">Status</th>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Date Added</th>
+        </tr>
+            <tr *ngFor="let JSONData of data | async | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize ">
+                <ng-container *ngIf= "JSONData.status === filterStatus || filterStatus === null ">
+            <td>
+                <button class="close" (click)="delete(JSONData.id)" style="float: none;" >
+                    <span aria-hidden="true">&times;</span>
+                </button>  
+            </td>
+                
+            <td>                      
+                <button 
+                type="button"                 
+                class="btn"
+                [class.btn-danger]="JSONData.status==true"
+                [class.btn-success]="JSONData.status==false"
+                (click)="updateStatus(JSONData.id, JSONData.status, JSONData.title, JSONData.date)"
+                >{{JSONData.status? "ACTIVE" : "DONE" }}</button>
+                </td>
+            <td>{{ JSONData.id }}</td>
+            <td *ngIf="EditId == JSONData.id">
+                    <input 
+                        class="form-control" 
+                        type="text" 
+                        [(ngModel)] = "updateTodo" 
+                        (keyup.enter)="update(JSONData.id,JSONData.status, JSONData.date)" 
+                        (keyup.escape)="edittable(!JSONData.id)"
+                        (blur)="edittable(!JSONData.id)"
+                        [placeholder]="JSONData.title "
+                        autofocus>
+                    </td>
+            <td *ngIf="EditId != JSONData.id" (dblclick)="edittable(JSONData.id)">{{ JSONData.title }}</td>
+            <td>{{ JSONData.date }} </td>
+            
+                </ng-container>
+            </tr>
+            
+
+        
+    </table>
+    <div class="justify-content-center">
+        <ngb-pagination [collectionSize]="(data | async).length" [(page)]="page" [pageSize]="pageSize" aria-label="Default pagination"></ngb-pagination>
+    </div>
+
+
+        </div>
+    </div>
+
+
+<div *ngIf="messageStatus === true">
+    <app-message-alert [Type]="messageType" [Message]="message"></app-message-alert>
+</div>
+

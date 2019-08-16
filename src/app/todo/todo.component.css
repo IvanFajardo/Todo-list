@@ -1,0 +1,15 @@
+td {
+    margin: 10px;
+
+}
+table {
+    font-size: 18px;
+    table-layout: fixed;
+    
+}
+
+.justify-content-center {
+    display: flex !important;
+    justify-content: center !important;
+}
+
