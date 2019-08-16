@@ -1,5 +1,6 @@
 <div style="position: absolute; top: 0; right: 0">
-        <ngb-alert *ngIf = "temp != Message" (close)="close()">
+  <!-- The popup will only show if there is a new message that is received -->
+        <ngb-alert *ngIf = "temp != Message" (close)="close()"> 
                <strong>{{ Type }}: </strong> {{ Message }}
               </ngb-alert>
             </div>

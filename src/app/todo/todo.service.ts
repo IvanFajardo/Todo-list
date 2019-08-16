@@ -28,7 +28,7 @@ export class TodoService {
       headers: {
         'Content-Type': 'application/json'
       },
-        body: ((methodStr === 'DELETE') ? null : JSON.stringify(data) )
+        body: ((methodStr === 'DELETE') ? null : JSON.stringify(data) ) // DELETE request must have a body of null
     };
     const result = from(fetch('http://localhost:5000/todo/' + id, options));
     return result.subscribe((response) => response.json);

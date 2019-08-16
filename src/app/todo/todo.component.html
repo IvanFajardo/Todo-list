@@ -1,9 +1,12 @@
 
 <div class="justify-content-center">
 
+    <!-- Wait for the data to complete before rendering -->
     <div *ngIf="data | async" style="text-align: center;" class="col-sm-6" >
        
-        <h1>Todo List</h1>
+    <h1>Todo List</h1>
+
+    <!-- Input box -->
     <input 
             class="form-control" 
             type="text" 
@@ -25,6 +28,8 @@
             <th scope="col">Title</th>
             <th scope="col">Date Added</th>
         </tr>
+
+        <!-- Load the items in the list  -->
             <tr *ngFor="let JSONData of data | async | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize ">
                 <ng-container *ngIf= "JSONData.status === filterStatus || filterStatus === null ">
             <td>
@@ -59,10 +64,9 @@
             
                 </ng-container>
             </tr>
-            
-
-        
     </table>
+
+    <!-- Pagination -->
     <div class="justify-content-center">
         <ngb-pagination [collectionSize]="(data | async)?.length" [(page)]="page" [pageSize]="pageSize" aria-label="Default pagination"></ngb-pagination>
     </div>
@@ -75,6 +79,8 @@
 <div *ngIf="messageStatus === true">
     <app-message-alert [Type]="messageType" [Message]="message"></app-message-alert>
 </div>
+
+<!-- Date -->
 <div class="livedate">
 {{ dateLive }}
 </div>
