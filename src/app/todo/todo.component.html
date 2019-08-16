@@ -64,7 +64,7 @@
         
     </table>
     <div class="justify-content-center">
-        <ngb-pagination [collectionSize]="(data | async).length" [(page)]="page" [pageSize]="pageSize" aria-label="Default pagination"></ngb-pagination>
+        <ngb-pagination [collectionSize]="(data | async)?.length" [(page)]="page" [pageSize]="pageSize" aria-label="Default pagination"></ngb-pagination>
     </div>
 
 
