@@ -10,7 +10,7 @@ import { from } from 'rxjs';
 })
 export class TodoService {
 
-  baseURL = 'http://localhost:5000/todo/';
+  baseURL = JSON.parse(localStorage.getItem('store')).baseUrl;
 
   constructor(private http: HttpClient) { }
 

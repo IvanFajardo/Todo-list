@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodoComponent } from './todo/todo.component';
@@ -8,6 +8,7 @@ import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { MessageAlertComponent } from './message-alert/message-alert.component';
 import { TodoService } from './todo/todo.service';
+import { ConfigService, loadConfigurations } from './config.service';
 
 
 
@@ -25,7 +26,13 @@ import { TodoService } from './todo/todo.service';
     ReactiveFormsModule,
     NgbModule
   ],
-  providers: [TodoService],
+  providers: [TodoService, ConfigService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loadConfigurations,
+      deps: [ConfigService],
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
