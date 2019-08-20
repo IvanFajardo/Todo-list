@@ -1,9 +1,11 @@
 import { Component, OnInit} from '@angular/core';
-import { TodoService, JSONData } from './todo.service';
+import { TodoService} from './todo.service';
 import {formatDate } from '@angular/common';
 import { Observable } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
-import { async } from 'q';
+import { Task } from '../task';
+
+
 
 
 @Component({
@@ -46,7 +48,7 @@ export class TodoComponent implements OnInit {
   }
 
   add() {
-    const value = {
+    const value: Task = {
       title: this.newTodo.value,
       status: true,
       date: this.date
@@ -67,7 +69,7 @@ export class TodoComponent implements OnInit {
     console.log(status);
     console.log(date);
 
-    const value = {
+    const value: Task = {
       title: this.updateTodo.value,
       status: status ,
       date: date 
@@ -84,7 +86,7 @@ export class TodoComponent implements OnInit {
   }
 
   updateStatus(id: number, status: boolean, title: string, date) {
-      const value = {
+      const value: Task = {
         title: title,
         status: !status,
         date: date

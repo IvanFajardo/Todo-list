@@ -4,12 +4,6 @@ import { Observable } from 'rxjs';
 import { from } from 'rxjs';
 
 
-export interface JSONData {
-  todo: JSONData;
-  id: number;
-  title: string;
-  status: boolean;
-}
 
 @Injectable({
   providedIn: 'root'
