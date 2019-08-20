@@ -24,8 +24,8 @@ export class TodoComponent implements OnInit {
   date = formatDate(Date(), 'MMM dd h:MM a', 'en-US');
   filter: any = 'All';
   filterStatus: boolean = null;
-  messageType = new Observable();
-  message = new Observable();
+  messageType: string;
+  message: string;
   messageStatus: boolean;
   data: any;
 
@@ -115,7 +115,7 @@ export class TodoComponent implements OnInit {
     console.log(this.filterStatus);
   }
 
-  sendMessage(type: any, message: any) {
+  sendMessage(type: string, message: string) {
     this.messageType = type;
     this.message = message;
     this.messageStatus = true;
