@@ -43,7 +43,6 @@ export class TodoComponent implements OnInit {
   get() {
     this.todoService.get().subscribe(data => {
       this.data = data;
-      console.log(data);
     });
   }
 
@@ -58,10 +57,11 @@ export class TodoComponent implements OnInit {
     if ( this.newTodo.invalid ) {
       this.sendMessage('Error', '1-15 characters only');
     } else {
-      this.todoService.add(value).subscribe();
-      this.newTodo.reset();
+      this.todoService.add(value).subscribe(data => {
+        this.newTodo.reset();
+        this.get();
+      });
     }
-    this.get();
   }
 
   update(id: number, status: boolean, date) {
