@@ -2,7 +2,7 @@
 <div class="justify-content-center">
 
     <!-- Wait for the data to complete before rendering -->
-    <div *ngIf="data | async" style="text-align: center;" class="col-sm-6" >
+    <div *ngIf="data" style="text-align: center;" class="col-sm-6" >
        
     <h1>Todo List</h1>
 
@@ -35,7 +35,7 @@
         </tr>
 
         <!-- Load the items in the list  -->
-            <tr *ngFor="let JSONData of data | async | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize ">
+            <tr *ngFor="let JSONData of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize ">
                 <ng-container *ngIf= "JSONData.status === filterStatus || filterStatus === null ">
             <td>
                 <button class="close" (click)="delete(JSONData.id)" style="float: none;" >
@@ -82,7 +82,7 @@
 
     <!-- Pagination -->
     <div class="justify-content-center">
-        <ngb-pagination [collectionSize]="(data | async)?.length" [(page)]="page" [pageSize]="pageSize" aria-label="Default pagination"></ngb-pagination>
+        <ngb-pagination [collectionSize]="(data)?.length" [(page)]="page" [pageSize]="pageSize" aria-label="Default pagination"></ngb-pagination>
     </div>
 
 

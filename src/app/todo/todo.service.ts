@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { from } from 'rxjs';
+
 
 export interface JSONData {
   todo: JSONData;
@@ -15,38 +16,35 @@ export interface JSONData {
 })
 export class TodoService {
 
+  baseURL = 'http://localhost:5000/todo/';
+
   constructor(private http: HttpClient) { }
 
+  getHeaders() {
+    const headers = new HttpHeaders();
+    headers.set('Content-type', 'application/json');
+    return headers;
+  }
+
   get() {
-    return this.http.get<JSONData>('http://localhost:5000/todo/');
+    const headers = this.getHeaders();
+    return this.http.get(this.baseURL, { headers } );
   }
 
-
-  config(methodStr, id = '', data) {
-    let options = {
-      method: methodStr ,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-        body: ((methodStr === 'DELETE') ? null : JSON.stringify(data) ) // DELETE request must have a body of null
-    };
-    const result = from(fetch('http://localhost:5000/todo/' + id, options));
-    return result.subscribe((response) => response.json);
-
-  }
 
   add(data) {
-    const method = 'POST';
-    const add = this.config(method, '', data);
+    const headers = this.getHeaders();
+    return this.http.post(this.baseURL,  data  , { headers });
   }
 
   update(data, id) {
-    const method = 'PUT';
-    this.config(method, id, data);
+    const headers = this.getHeaders();
+    console.log(data);
+    return this.http.put(this.baseURL + id,  data  , { headers });
   }
 
   delete(id) {
-    const method = 'DELETE';
-    this.config(method, id, null);
+    const headers = this.getHeaders();
+    return this.http.delete(this.baseURL + id, { headers });
   }
 }

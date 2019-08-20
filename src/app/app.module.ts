@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { MessageAlertComponent } from './message-alert/message-alert.component';
+import { TodoService } from './todo/todo.service';
 
 
 
@@ -24,7 +25,7 @@ import { MessageAlertComponent } from './message-alert/message-alert.component';
     ReactiveFormsModule,
     NgbModule
   ],
-  providers: [],
+  providers: [TodoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

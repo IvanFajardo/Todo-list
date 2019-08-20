@@ -3,6 +3,7 @@ import { TodoService, JSONData } from './todo.service';
 import {formatDate } from '@angular/common';
 import { Observable } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
+import { async } from 'q';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class TodoComponent implements OnInit {
   messageType = new Observable();
   message = new Observable();
   messageStatus: boolean;
-  data: Observable <JSONData>;
+  data: any;
 
   constructor(private todoService: TodoService) { }
 
@@ -38,52 +39,67 @@ export class TodoComponent implements OnInit {
   }
 
   get() {
-    this.data = this.todoService.get();
+    this.todoService.get().subscribe(data => {
+      this.data = data;
+      console.log(data);
+    });
   }
 
   add() {
+    const value = {
+      title: this.newTodo.value,
+      status: true,
+      date: this.date
+    };
+
     this.sendMessage('Add', this.newTodo.value + ' has been added to the list');
     if ( this.newTodo.invalid ) {
       this.sendMessage('Error', '1-15 characters only');
     } else {
-      this.todoService.add({
-        title: this.newTodo.value,
-        status: true,
-        date: this.date
-      });
+      this.todoService.add(value).subscribe();
       this.newTodo.reset();
     }
     this.get();
   }
 
   update(id: number, status: boolean, date) {
+    console.log(id);
+    console.log(status);
+    console.log(date);
+
+    const value = {
+      title: this.updateTodo.value,
+      status: status ,
+      date: date 
+    };
     this.sendMessage('Update', 'ID: ' + id + ' has a new title of ' + this.updateTodo.value);
     if ( this.updateTodo.invalid ) {
       this.sendMessage('Error', '1-15 characters only');
     } else {
-      this.todoService.update({
-        title: this.updateTodo.value,
-        status: status,
-        date: date
-      }, id );
+      this.todoService.update( value , id ).subscribe(data => {
+        this.get();
+      }
+      );
     }
-    this.get();
   }
 
   updateStatus(id: number, status: boolean, title: string, date) {
+      const value = {
+        title: title,
+        status: !status,
+        date: date
+      };
       this.sendMessage('Update', title + ' is ' + ((status) ? 'DONE' : 'ACTIVE'));
-      this.todoService.update({
-      title: title,
-      status: !status,
-      date: date
-    }, id );
-      this.get();
-  }
+      this.todoService.update( value , id ).subscribe(data => {
+        this.get();
+      });
+    }
 
   delete(id) {
     this.sendMessage('Delete', 'ID: ' + id + ' has been deleted from the list');
-    this.todoService.delete(id);
-    this.get();
+    this.todoService.delete(id).subscribe(data => {
+      this.get();
+    });
   }
 
   edittable(id) {
