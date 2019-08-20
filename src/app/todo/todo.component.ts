@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { TodoService, JSONData } from './todo.service';
 import {formatDate } from '@angular/common';
 import { Observable } from 'rxjs';
+import { FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -10,8 +11,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./todo.component.css']
 })
 export class TodoComponent implements OnInit {
-  private newTodo;
-  private updateTodo;
+  newTodo = new FormControl('', [Validators.required, Validators.maxLength(20)]);
+  private updateTodo = new FormControl('', [Validators.required, Validators.maxLength(20)]);
   private EditId: number;
   page = 1;
   pageSize = 5;
@@ -41,22 +42,31 @@ export class TodoComponent implements OnInit {
   }
 
   add() {
-    this.sendMessage('Add', this.newTodo + ' has been added to the list');
-    this.todoService.add({
-      title: this.newTodo,
-      status: true,
-      date: this.date
-    });
+    this.sendMessage('Add', this.newTodo.value + ' has been added to the list');
+    if ( this.newTodo.invalid ) {
+      this.sendMessage('Error', '1-15 characters only');
+    } else {
+      this.todoService.add({
+        title: this.newTodo.value,
+        status: true,
+        date: this.date
+      });
+      this.newTodo.reset();
+    }
     this.get();
   }
 
   update(id: number, status: boolean, date) {
-    this.sendMessage('Update', 'ID: ' + id + ' has a new title of ' + this.updateTodo);
-    this.todoService.update({
-      title: this.updateTodo,
-      status: status,
-      date: date
-    }, id );
+    this.sendMessage('Update', 'ID: ' + id + ' has a new title of ' + this.updateTodo.value);
+    if ( this.updateTodo.invalid ) {
+      this.sendMessage('Error', '1-15 characters only');
+    } else {
+      this.todoService.update({
+        title: this.updateTodo.value,
+        status: status,
+        date: date
+      }, id );
+    }
     this.get();
   }
 

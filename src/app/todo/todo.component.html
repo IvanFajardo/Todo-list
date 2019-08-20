@@ -7,12 +7,17 @@
     <h1>Todo List</h1>
 
     <!-- Input box -->
+    
+
+
+
     <input 
             class="form-control" 
             type="text" 
-            [(ngModel)] = "newTodo" 
+            [formControl]="newTodo"
             (keyup.enter)="add()" 
-            placeholder="Add new Task">
+            placeholder="Add new Task (Hit 'Enter' to submit)">
+    
                 
     <table class="table table-stripped" style="text-align: center;">  
         <tr>
@@ -49,17 +54,26 @@
                 </td>
             <td>{{ JSONData.id }}</td>
             <td *ngIf="EditId == JSONData.id">
+                    
                     <input 
                         class="form-control" 
                         type="text" 
-                        [(ngModel)] = "updateTodo" 
+                        [formControl] = "updateTodo" 
                         (keyup.enter)="update(JSONData.id,JSONData.status, JSONData.date)" 
                         (keyup.escape)="edittable(!JSONData.id)"
                         (blur)="edittable(!JSONData.id)"
                         [placeholder]="JSONData.title "
                         autofocus>
+                    
                     </td>
-            <td *ngIf="EditId != JSONData.id" (dblclick)="edittable(JSONData.id)">{{ JSONData.title }}</td>
+                    
+            <td *ngIf="EditId != JSONData.id" (dblclick)="edittable(JSONData.id)">
+                
+                    <div class="title">{{ JSONData.title }}
+                            <span class="tooltiptext">Double click to edit</span>
+                    </div>
+                
+            </td>
             <td>{{ JSONData.date }} </td>
             
                 </ng-container>

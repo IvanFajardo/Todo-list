@@ -18,8 +18,8 @@ export class MessageAlertComponent implements OnInit {
   }
 
   close() {
-    this.statusClose = true;
-    this.temp = this.Message;
+    this.Message = null;
+    this.Type = null;
   }
 
 }

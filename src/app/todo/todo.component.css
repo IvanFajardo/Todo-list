@@ -19,3 +19,24 @@ table {
     left: 0;
 }
 
+.title .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: rgb(0, 175, 53);
+    color: rgb(255, 255, 255);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+  }
+
+.title {
+    position: relative;
+    display: inline-block;
+
+}
+
+.title:hover .tooltiptext {
+    visibility: visible;
+  }

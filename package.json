@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --live-reload false",
+    "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "json": "json-server --watch src/assets/db.json --port 5000"
+    "json": "json-server --watch db.json --port 5000"
   },
   "private": true,
   "dependencies": {
