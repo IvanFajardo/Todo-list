@@ -27,7 +27,7 @@ export class TodoComponent implements OnInit {
   messageType = new Observable();
   message = new Observable();
   messageStatus: boolean;
-  data: any;
+  data: Task[];
 
   constructor(private todoService: TodoService) { }
 
