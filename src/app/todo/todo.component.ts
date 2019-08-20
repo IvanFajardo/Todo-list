@@ -58,8 +58,8 @@ export class TodoComponent implements OnInit {
       this.sendMessage('Error', '1-15 characters only');
     } else {
       this.todoService.add(value).subscribe(data => {
-        this.newTodo.reset();
-        this.get();
+        this.newTodo.reset(); // Text Field Reset
+        this.get(); 
       });
     }
   }
