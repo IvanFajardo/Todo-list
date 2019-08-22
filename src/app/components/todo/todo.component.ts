@@ -1,9 +1,9 @@
 import { Component, OnInit} from '@angular/core';
-import { TodoService} from './todo.service';
+import { TodoService} from '../../services/todo/todo.service';
 import {formatDate } from '@angular/common';
 import { Observable } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
-import { Task } from '../task';
+import { Task } from '../../model/task';
 
 
 
