@@ -17,24 +17,24 @@ export class TodoService {
     return headers;
   }
 
-  get() {
+  getJson() {
     const headers = this.getHeaders();
     return this.http.get(this.baseURL, { headers } );
   }
 
 
-  add(data) {
+  addJson(data) {
     const headers = this.getHeaders();
     return this.http.post(this.baseURL,  data  , { headers });
   }
 
-  update(data, id) {
+  updateJson(data, id) {
     const headers = this.getHeaders();
     console.log(data);
     return this.http.put(this.baseURL + id,  data  , { headers });
   }
 
-  delete(id) {
+  deleteJson(id) {
     const headers = this.getHeaders();
     return this.http.delete(this.baseURL + id, { headers });
   }

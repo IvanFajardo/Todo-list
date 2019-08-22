@@ -7,19 +7,17 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MessageAlertComponent implements OnInit {
 
-  @Input() Message: string;
-  @Input() Type: string;
-  temp: any;
-  statusClose: boolean;
+  @Input() message: string;
+  @Input() messageType: string;
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  close() {
-    this.Message = null;
-    this.Type = null;
+  closeMessage() {
+    this.message = null;
+    this.messageType = null;
   }
 
 }

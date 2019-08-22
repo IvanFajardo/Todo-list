@@ -15,38 +15,38 @@ import { Task } from '../task';
 })
 export class TodoComponent implements OnInit {
   newTodo = new FormControl('', [Validators.required, Validators.maxLength(20)]);
-  private updateTodo = new FormControl('', [Validators.required, Validators.maxLength(20)]);
-  private EditId: number;
+  updateTodo = new FormControl('', [Validators.required, Validators.maxLength(20)]);
+  editId: number;
   page = 1;
   pageSize = 5;
   liveDate: Date = new Date();
-  dateLive: string;
+  formattedLiveDate: string;
   date = formatDate(Date(), 'MMM dd h:MM a', 'en-US');
-  filter: any = 'All';
+  filterId: any = 'All';
   filterStatus: boolean = null;
   messageType: string;
   message: string;
   messageStatus: boolean;
-  data: any;
+  tasks: any;
 
   constructor(private todoService: TodoService) { }
 
   ngOnInit() {
-    this.get();
+    this.getTask();
     setInterval(() => {
       this.liveDate = new Date();
-      this.dateLive = formatDate(this.liveDate, 'MMM dd yyy h:MM:ss a', 'en-US');
+      this.formattedLiveDate = formatDate(this.liveDate, 'MMM dd yyy h:MM:ss a', 'en-US');
     }, 1);
 
   }
 
-  get() {
-    this.todoService.get().subscribe(data => {
-      this.data = data;
+  getTask() {
+    this.todoService.getJson().subscribe(data => {
+      this.tasks = data;
     });
   }
 
-  add() {
+  addTask() {
     const value: Task = {
       title: this.newTodo.value,
       status: true,
@@ -57,14 +57,14 @@ export class TodoComponent implements OnInit {
     if ( this.newTodo.invalid ) {
       this.sendMessage('Error', '1-15 characters only');
     } else {
-      this.todoService.add(value).subscribe(data => {
+      this.todoService.addJson(value).subscribe(data => {
         this.newTodo.reset(); // Text Field Reset
-        this.get(); 
+        this.getTask();
       });
     }
   }
 
-  update(id: number, status: boolean, date) {
+  updateTask(id: number, status: boolean, date) {
     console.log(id);
     console.log(status);
     console.log(date);
@@ -78,40 +78,40 @@ export class TodoComponent implements OnInit {
     if ( this.updateTodo.invalid ) {
       this.sendMessage('Error', '1-15 characters only');
     } else {
-      this.todoService.update( value , id ).subscribe(data => {
-        this.get();
+      this.todoService.updateJson( value , id ).subscribe(data => {
+        this.getTask();
       }
       );
     }
   }
 
-  updateStatus(id: number, status: boolean, title: string, date) {
+  updateTaskStatus(id: number, status: boolean, title: string, date) {
       const value: Task = {
         title: title,
         status: !status,
         date: date
       };
       this.sendMessage('Update', title + ' is ' + ((status) ? 'DONE' : 'ACTIVE'));
-      this.todoService.update( value , id ).subscribe(data => {
-        this.get();
+      this.todoService.updateJson( value , id ).subscribe(data => {
+        this.getTask();
       });
     }
 
-  delete(id) {
+  deleteTask(id) {
     this.sendMessage('Delete', 'ID: ' + id + ' has been deleted from the list');
-    this.todoService.delete(id).subscribe(data => {
-      this.get();
+    this.todoService.deleteJson(id).subscribe(data => {
+      this.getTask();
     });
   }
 
-  edittable(id) {
-    this.EditId = id;
+  edittableTask(id) {
+    this.editId = id;
   }
 
-  selected() {
-    if (this.filter === 'Active') {this.filterStatus = true; }
-    if (this.filter === 'Done') {this.filterStatus = false; }
-    if (this.filter === 'All') {this.filterStatus = null; }
+  selectedTask() {
+    if (this.filterId === 'Active') {this.filterStatus = true; }
+    if (this.filterId === 'Done') {this.filterStatus = false; }
+    if (this.filterId === 'All') {this.filterStatus = null; }
     console.log(this.filterStatus);
   }
 

@@ -2,7 +2,7 @@
 <div class="justify-content-center">
 
     <!-- Wait for the data to complete before rendering -->
-    <div *ngIf="data" style="text-align: center;" class="col-sm-6" >
+    <div *ngIf="tasks" style="text-align: center;" class="col-sm-6" >
        
     <h1>Todo List</h1>
 
@@ -15,14 +15,14 @@
             class="form-control" 
             type="text" 
             [formControl]="newTodo"
-            (keyup.enter)="add()" 
+            (keyup.enter)="addTask()" 
             placeholder="Add new Task (Hit 'Enter' to submit)">
     
                 
     <table class="table table-stripped" style="text-align: center;">  
         <tr>
             <th scope="col">
-                <select class="btn btn-secondary dropdown-toggle" [(ngModel)]="filter" (change)="selected()" required>
+                <select class="btn btn-secondary dropdown-toggle" [(ngModel)]="filterId" (change)="selectedTask()" required>
                         <option selected>All</option>
                         <option >Active</option>
                         <option >Done</option>
@@ -35,10 +35,10 @@
         </tr>
 
         <!-- Load the items in the list  -->
-            <tr *ngFor="let JSONData of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize ">
-                <ng-container *ngIf= "JSONData.status === filterStatus || filterStatus === null ">
+            <tr *ngFor="let jsonData of tasks | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize ">
+                <ng-container *ngIf= "jsonData.status === filterStatus || filterStatus === null ">
             <td>
-                <button class="close" (click)="delete(JSONData.id)" style="float: none;" >
+                <button class="close" (click)="deleteTask(jsonData.id)" style="float: none;" >
                     <span aria-hidden="true">&times;</span>
                 </button>  
             </td>
@@ -47,34 +47,34 @@
                 <button 
                 type="button"                 
                 class="btn"
-                [class.btn-danger]="JSONData.status==true"
-                [class.btn-success]="JSONData.status==false"
-                (click)="updateStatus(JSONData.id, JSONData.status, JSONData.title, JSONData.date)"
-                >{{JSONData.status? "ACTIVE" : "DONE" }}</button>
+                [class.btn-danger]="jsonData.status==true"
+                [class.btn-success]="jsonData.status==false"
+                (click)="updateTaskStatus(jsonData.id, jsonData.status, jsonData.title, jsonData.date)"
+                >{{jsonData.status? "ACTIVE" : "DONE" }}</button>
                 </td>
-            <td>{{ JSONData.id }}</td>
-            <td *ngIf="EditId == JSONData.id">
+            <td>{{ jsonData.id }}</td>
+            <td *ngIf="editId == jsonData.id">
                     
                     <input 
                         class="form-control" 
                         type="text" 
                         [formControl] = "updateTodo" 
-                        (keyup.enter)="update(JSONData.id,JSONData.status, JSONData.date)" 
-                        (keyup.escape)="edittable(!JSONData.id)"
-                        (blur)="edittable(!JSONData.id)"
-                        [placeholder]="JSONData.title "
+                        (keyup.enter)="updateTask(jsonData.id,jsonData.status, jsonData.date)" 
+                        (keyup.escape)="edittableTask(!jsonData.id)"
+                        (blur)="edittableTask(!jsonData.id)"
+                        [placeholder]="jsonData.title "
                         autofocus>
                     
                     </td>
                     
-            <td *ngIf="EditId != JSONData.id" (dblclick)="edittable(JSONData.id)">
+            <td *ngIf="editId != jsonData.id" (dblclick)="edittableTask(jsonData.id)">
                 
-                    <div class="title">{{ JSONData.title }}
+                    <div class="title">{{ jsonData.title }}
                             <span class="tooltiptext">Double click to edit</span>
                     </div>
                 
             </td>
-            <td>{{ JSONData.date }} </td>
+            <td>{{ jsonData.date }} </td>
             
                 </ng-container>
             </tr>
@@ -82,7 +82,7 @@
 
     <!-- Pagination -->
     <div class="justify-content-center">
-        <ngb-pagination [collectionSize]="(data)?.length" [(page)]="page" [pageSize]="pageSize" aria-label="Default pagination"></ngb-pagination>
+        <ngb-pagination [collectionSize]="(tasks)?.length" [(page)]="page" [pageSize]="pageSize" aria-label="Default pagination"></ngb-pagination>
     </div>
 
 
@@ -91,7 +91,7 @@
 
 
 <div *ngIf="messageStatus === true">
-    <app-message-alert [Type]="messageType" [Message]="message"></app-message-alert>
+    <app-message-alert [messageType]="messageType" [message]="message"></app-message-alert>
 </div>
 
 <!-- Date -->
